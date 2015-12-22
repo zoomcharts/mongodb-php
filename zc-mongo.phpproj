@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>zc-mongo</Name>
+    <ProjectGuid>{0e44b82e-4219-4dc0-953d-caceb7183b30}</ProjectGuid>
+    <RootNamespace>zc-mongo</RootNamespace>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="readme.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="service.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\BulkWriteResult.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Client.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Collection.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Database.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\DeleteResult.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\BadMethodCallException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\Exception.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\InvalidArgumentException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\InvalidArgumentTypeException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\RuntimeException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\UnexpectedTypeException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\UnexpectedValueException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Exception\UnexpectedValueTypeException.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\functions.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\InsertManyResult.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\InsertOneResult.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\CollectionInfo.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\CollectionInfoCommandIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\CollectionInfoIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\CollectionInfoLegacyIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\DatabaseInfo.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\DatabaseInfoIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\DatabaseInfoLegacyIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\IndexInfo.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\IndexInfoIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\IndexInfoIteratorIterator.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Model\IndexInput.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Aggregate.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\BulkWrite.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Count.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\CreateCollection.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\CreateIndexes.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Delete.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\DeleteMany.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\DeleteOne.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Distinct.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\DropCollection.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\DropDatabase.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\DropIndexes.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Executable.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Find.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\FindAndModify.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\FindOne.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\FindOneAndDelete.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\FindOneAndReplace.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\FindOneAndUpdate.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\InsertMany.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\InsertOne.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\ListCollections.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\ListDatabases.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\ListIndexes.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\ReplaceOne.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\Update.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\UpdateMany.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\Operation\UpdateOne.php" />
+    <Compile Include="vendor\mongodb\mongodb\src\UpdateResult.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="vendor\" />
+    <Folder Include="vendor\mongodb\" />
+    <Folder Include="vendor\mongodb\mongodb\" />
+    <Folder Include="vendor\mongodb\mongodb\src\" />
+    <Folder Include="vendor\mongodb\mongodb\src\Exception\" />
+    <Folder Include="vendor\mongodb\mongodb\src\Model\" />
+    <Folder Include="vendor\mongodb\mongodb\src\Operation\" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,4 @@
+/.vs/
+composer.lock
+composer.phar
+/*.user
