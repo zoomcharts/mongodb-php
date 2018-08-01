@@ -24,7 +24,11 @@ try
     $id = "";
     $sort_field = "sum";
     //group_field - field for aggregation grouping, by defult at first we want results grouped by "continent".
-    $group_field = "continent";
+    $group_field = '$continent';
+    //extra_fields - additional fields for mongo aggregation to be returned
+    $extra_fields = [];
+    //ord -1 means descending, 1 - ascending. 
+    $ord = -1;
 
 
     //Case if section id is passed along request. This is where we read our 
@@ -36,10 +40,17 @@ try
         $parts = explode("_",$id);
         $c = count($parts);
         if($c == 1) {
-            $group_field = "country";
+            $group_field = '$country';
             $filter = ["continent" => $id];
         } else if($c == 2) {
-            $group_field = "name";
+            $group_field = '$name';
+            
+            //In this drilldown level we want to sort by year and so we need 
+            //mongo aggregation to return also year values like this:
+            $extra_fields = ['year' => ['$first' => '$year']];
+            $sort_field = "year";
+            $ord = 1;
+
             $filter = ["continent" => $parts[0], "country" => $parts[1]];
             //This is our last drilldown level, so we won't set ID to retrieved values:
             $put_id = null;
@@ -47,31 +58,35 @@ try
     }
 
 
+    // first build group section for aggregation query:
+    $group = [
+        //group by needed field
+        '_id' => $group_field,
+        //count each group records:
+        'count' => [ '$sum' => 1 ],
+        //sum each group values:
+        'sum' => [ '$sum' => '$value' ]
+    ];
+    if($extra_fields) {
+        $group = array_merge($group, $extra_fields);
+    }
+    
     // execute the aggregation query against the MongoDB database.
     $queryResult = $collection->aggregate([
         [ '$match' => (object)$filter ],
-        [ '$group' => [
-            //group by needed field
-            '_id' => "$".$group_field,
-            //count each group records:
-            'count' => [ '$sum' => 1 ],
-            'sum' => [ '$sum' => '$value' ]
-        ] ],
-        //sort -1 means descending, 1 - ascending. 
-        [ '$sort' => [ $sort_field => -1 ] ],
+        [ '$group' => $group],
+        [ '$sort' => [ $sort_field => $ord ] ],
         [ '$limit' => $limit ]
     ]);
 
-    //Now build the data in format that is supported by PieChart
+    //Now build the data in format that is supported by FacetChart
     $chartValues = [];
     $count = 0;
 
-    //It is possible to add subvalues to each record, 
-    //but in this example we will make piechart to ask for subvalues on each slice click.
-    $subvalues = null;
+    //In this example we will make FacetChart to ask for subvalues on each bar clicked.
     foreach ($queryResult as $row) {
-        $r = ["name" => $row->_id, "value" => $row->sum, "subvalues" => $subvalues];
-        //Putting "ID" in chartValues, means that PieChart will ask for subvalues. 
+        $r = ["name" => $row->_id, "value" => $row->sum];
+        //Putting "ID" in chartValues, means that FacetChart will ask for subvalues. 
         if($put_id) {
             //Let's construct our own custom ID:
             $val_id = $id ? $id . "_" . $row->_id : $row->_id;  
