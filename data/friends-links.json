@@ -1,0 +1,88 @@
+{"id":"l01", "from":"m-1", "to":"f-1", "type":"friend"}
+{"id":"l02", "from":"m-1", "to":"f-2", "type":"friend"}
+{"id":"l03", "from":"m-1", "to":"f-3", "type":"friend"}
+{"id":"l04", "from":"m-1", "to":"f-4", "type":"friend"}
+{"id":"l05", "from":"m-1", "to":"f-5", "type":"friend"}
+{"id":"l06", "from":"m-1", "to":"f-6", "type":"friend"}
+
+{"id":"l07", "from":"m-2", "to":"f-2", "type":"collegue"}
+{"id":"l08", "from":"m-2", "to":"f-5", "type":"friend"}
+{"id":"l09", "from":"m-2", "to":"f-6", "type":"friend"}
+{"id":"l10", "from":"m-2", "to":"f-7", "type":"friend"}
+{"id":"l11", "from":"m-2", "to":"f-12", "type":"friend"}
+
+{"id":"l12", "from":"m-3", "to":"f-10", "type":"spouse"}
+{"id":"l13", "from":"m-3", "to":"f-5", "type":"enemy"}
+{"id":"l14", "from":"m-3", "to":"f-8", "type":"friend"}
+{"id":"l15", "from":"m-3", "to":"f-4", "type":"friend"}
+{"id":"l16", "from":"m-3", "to":"f-9", "type":"friend"}
+
+{"id":"l17", "from":"m-4", "to":"f-15", "type":"spouse"}
+{"id":"l18", "from":"m-4", "to":"f-14", "type":"collegue"}
+{"id":"l19", "from":"m-4", "to":"f-13", "type":"friend"}
+{"id":"l20", "from":"m-4", "to":"f-12", "type":"friend"}
+{"id":"l21", "from":"m-4", "to":"f-11", "type":"friend"}
+
+{"id":"l22", "from":"m-5", "to":"f-15", "type":"collegue"}
+{"id":"l23", "from":"m-5", "to":"f-4", "type":"collegue"}
+{"id":"l24", "from":"m-5", "to":"f-8", "type":"collegue"}
+{"id":"l25", "from":"m-5", "to":"f-11", "type":"collegue"}
+{"id":"l26", "from":"m-5", "to":"f-3", "type":"friend"}
+
+{"id":"l27", "from":"f-11", "to":"f-15", "type":"collegue"}
+
+{"id":"l28", "from":"m-5", "to":"m-6", "type":"friend"}
+{"id":"l29", "from":"m-6", "to":"m-7", "type":"friend"}
+{"id":"l30", "from":"m-7", "to":"m-8", "type":"friend"}
+{"id":"l31", "from":"m-8", "to":"m-9", "type":"friend"}
+{"id":"l32", "from":"m-9", "to":"m-10", "type":"friend"}
+{"id":"l33", "from":"m-10", "to":"m-11", "type":"friend"}
+{"id":"l34", "from":"m-11", "to":"m-12", "type":"friend"}
+{"id":"l35", "from":"m-12", "to":"m-13", "type":"friend"}
+{"id":"l36", "from":"m-13", "to":"m-5", "type":"friend"}
+
+{"id":"l101", "from":"m-7", "to":"f-25", "type":"collegue"}
+{"id":"l102", "from":"m-7", "to":"f-26", "type":"collegue"}
+{"id":"l103", "from":"m-9", "to":"f-26", "type":"collegue"}
+{"id":"l104", "from":"m-9", "to":"f-25", "type":"collegue"}
+{"id":"l105", "from":"f-25", "to":"f-26", "type":"collegue"}
+{"id":"l106", "from":"m-7", "to":"m-9", "type":"collegue"}
+
+{"id":"l107", "from":"f-26", "to":"f-28", "type":"friend"}
+{"id":"l108", "from":"f-27", "to":"f-28", "type":"friend"}
+{"id":"l109", "from":"f-27", "to":"f-29", "type":"friend"}
+{"id":"l110", "from":"f-10", "to":"f-29", "type":"friend"}
+
+{"id":"l111", "from":"f-29", "to":"f-33", "type":"friend"}
+{"id":"l112", "from":"f-29", "to":"f-32", "type":"friend"}
+{"id":"l113", "from":"f-29", "to":"f-31", "type":"friend"}
+{"id":"l114", "from":"f-24", "to":"f-31", "type":"friend"}
+{"id":"l115", "from":"f-24", "to":"f-32", "type":"friend"}
+{"id":"l116", "from":"f-24", "to":"f-33", "type":"friend"}
+{"id":"l117", "from":"f-24", "to":"f-23", "type":"friend"}
+{"id":"l118", "from":"f-23", "to":"f-22", "type":"friend"}
+{"id":"l119", "from":"f-22", "to":"f-21", "type":"friend"}
+{"id":"l120", "from":"f-21", "to":"f-20", "type":"friend"}
+{"id":"l121", "from":"f-20", "to":"f-19", "type":"friend"}
+{"id":"l122", "from":"f-19", "to":"f-18", "type":"friend"}
+{"id":"l123", "from":"f-18", "to":"f-17", "type":"friend"}
+{"id":"l124", "from":"f-17", "to":"f-16", "type":"friend"}
+{"id":"l125", "from":"f-16", "to":"f-30", "type":"friend"}
+{"id":"l126", "from":"f-19", "to":"f-30", "type":"friend"}
+
+{"id":"l130", "from":"f-15", "to":"m-10", "type":"friend"}
+{"id":"l131", "from":"f-23", "to":"m-4", "type":"friend"}
+{"id":"l132", "from":"f-15", "to":"m-7", "type":"friend"}
+{"id":"l133", "from":"f-12", "to":"m-13", "type":"friend"}
+{"id":"l134", "from":"f-21", "to":"m-12", "type":"friend"}
+{"id":"l135", "from":"f-29", "to":"m-11", "type":"friend"}
+
+{"id":"l136", "from":"f-13", "to":"m-11", "type":"friend"}
+{"id":"l137", "from":"f-13", "to":"m-7", "type":"friend"}
+{"id":"l138", "from":"f-13", "to":"m-12", "type":"friend"}
+{"id":"l139", "from":"f-13", "to":"m-6", "type":"friend"}
+
+{"id":"l140", "from":"f-17", "to":"f-9", "type":"friend"}
+{"id":"l141", "from":"f-2", "to":"m-4", "type":"collegue"}
+{"id":"l142", "from":"f-5", "to":"m-13", "type":"friend"}
+

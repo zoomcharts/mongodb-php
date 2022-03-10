@@ -3,15 +3,23 @@ try
 {
     // included for debugging purposes - should be removed in any production code
     ini_set('display_errors', 1);
+    date_default_timezone_set("UTC");
 
     // include the mongodb library
     require 'vendor/autoload.php';
 
 
 
-    // connect to the database. replace "zoomcharts.eur-usd" with where you imported the sample dataset
-    $manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
-    $collection = new MongoDB\Collection($manager, "zoomcharts.eur-usd");
+    // connect to the database. replace "mongo-example.eur_usd" with where you imported the sample dataset
+    //$manager = new MongoDB\Driver\Manager("mongodb://localhost:27017");
+    
+    $dsn = "mongodb://user:pass@127.0.0.1/db";
+    if (file_exists("config-local.php")){
+        require "config-local.php";
+    }
+
+    $manager = new MongoDB\Driver\Manager($dsn);
+    $collection = new MongoDB\Collection($manager, "mongo-example.eur_usd");
 
 
 
@@ -56,20 +64,23 @@ try
     // execute the aggregation query against the MongoDB database.
     $queryResult = $collection->aggregate([
         [ '$match' => (object)$filter ],
+        // this sort is required for the `first` and `last` aggregations
+        [ '$sort' => [ $timeField => 1 ] ],
         [ '$group' => [
             // group by the previously calculated date unit. Note the '$date' part - this points to the
             // field that stores the timestamp in the database document.
             '_id' => [ '$dateToString' => [ 'format' => $dateFormat, 'date' => '$'. $timeField ] ],
 
             // multiple aggregated values can be calculated at once
-            // note that '$rate' points to the field in the database document
+            'first' => [ '$first' => '$' . $valueField ],
+            'last' => [ '$last' => '$' . $valueField ],
             'min' => [ '$min' => '$' . $valueField ],
             'max' => [ '$max' => '$' . $valueField ],
-            'avg' => [ '$avg' => '$' . $valueField ],
 
             // see the following link on why `count` is recommended when using `avg` aggregation.
             // https://zoomcharts.com/developers/en/time-chart/api-reference/settings/chartTypes/candlestick/data.html#countIndex
             'count' => [ '$sum' => 1 ],
+            'sum' => [ '$sum' => '$' . $valueField ],
         ] ],
         [ '$sort' => [ '_id' => 1 ] ],
         // the chart will issue multiple requests to load the rest of the data if needed
@@ -96,7 +107,7 @@ try
         $phpTime = DateTime::createFromFormat('Y-m-d\TH:i:s.uO', $row->_id);
         $jsTime = (double)($phpTime->getTimestamp() . substr($phpTime->format("u"), 0, 3));
 
-        $chartValues[] = [ $jsTime, $row->min, $row->max, $row->avg, $row->count];
+        $chartValues[] = [ $jsTime, $row->min, $row->max, $row->first, $row->last, $row->sum, $row->count];
 
         if ($from === null) $from = $jsTime;
         $to = $jsTime + 1;

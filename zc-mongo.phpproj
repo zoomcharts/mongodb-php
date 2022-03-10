@@ -16,9 +16,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Content Include="readme.md" />
+    <Content Include="timechart.html" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="service.php" />
+    <Compile Include="timechart-service.php" />
     <Compile Include="vendor\mongodb\mongodb\src\BulkWriteResult.php" />
     <Compile Include="vendor\mongodb\mongodb\src\Client.php" />
     <Compile Include="vendor\mongodb\mongodb\src\Collection.php" />

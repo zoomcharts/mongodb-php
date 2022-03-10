@@ -1,0 +1,199 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ZoomCharts with MongoDB - GeoChart - integration example</title>
+    <meta name="keywords" content="ZoomCharts, MongoDB, Example, integration" />
+    <meta name="description" content="ZoomCharts with MongoDB and PHP GeoChart integration example" />
+    <link rel="stylesheet" href="main.css" type="text/css">
+</head>
+<body>
+    <header>
+        <a id="zoomcharts" href="https://www.zoomcharts.com/en/" target="_blank">Zoomcharts</a>
+        <a href="https://www.zoomcharts.com/en/pricing/" class="btn" target="_blank">Get ZoomCharts</a>
+    </header>
+    <div id="content">
+        <nav id="legend"><a href="index.html">Index</a> > <a href="geochart.html">GeoChart example</a></nav>
+        <h1><a target="_blank" href="https://zoomcharts.com">ZoomCharts</a> GeoChart integration example with <a target="_blank" href="http://mongodb.com">MongoDB</a> and <a href="http://php.net" target="_blank">PHP</a></h1>
+        <section id="description">
+            <p>In this example we are showing you how ZoomCharts can fetch data interactively from MongoDB database through PHP middleware. See the source <a target="_blank" href="https://github.com/zoomcharts/mongodb-php">code here</a>.</p>
+            <p>PieCharts on the map shows aggregated data.</p>
+            <p>Please visit <a target="_blank" href="https://zoomcharts.com/developers/en/geo-chart/api-reference/settings.html">GeoChart documentation</a> for more information.</p>
+        </section>
+        <div id="chart"></div>
+    </div>
+    <a href="https://github.com/zoomcharts/mongodb-php" target="_blank"><img style="position: absolute; top: 70px; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+
+    <script src="https://cdn.zoomcharts-cloud.com/1/latest/zoomcharts.js"></script>
+    <script>
+        var hasProp = {}.hasOwnProperty;
+        var enableAggregation = true;
+
+        var chart = new ZoomCharts.GeoChart({
+        container: "chart",
+        area: { height: "450px" },
+        data: {
+            url: "/geochart-service.php"
+        },
+        layers: [
+            {
+                id: "default",
+                type: "items",
+                aggregation: {
+                    enabled: true,
+                    // needed for aggregation and aggregatedWeight result
+                    weightFunction: function(node) {
+                        return node.population;
+                    }
+                },
+                style: {
+                    nodeStyleFunction: function (node) {
+                        // get data about current aggregated item
+                        var aggr = node.data.aggregatedNodes;
+                        // get sum of current aggregated item
+                        var w = node.data.aggregatedWeight;
+                        // use Math.log of Math.log10 for big scale/difference statistics
+                        // node.radius = Math.log(w);
+                        // use simple delimeter/divider for node radius
+                        node.radius = w / 500000 + 5;
+
+                        //get current zoom level:
+                        zl = chart.zoomLevel();
+                        //if zoom level is larger, increase node.radius:
+                        if(zl >= 6) {
+                            node.radius += 15;
+                        }
+
+                        //Create node label if nodes are aggregated or not:
+                        if (node.removed) {
+                            node.label = "";
+                        } else {
+                            if(aggr.length == 1) {
+                                node.label = aggr[0].name + "\n pop:" + getNumberTxt(w);
+                            } else {
+                                node.label = 'cities:' + aggr.length + "\n pop:" + getNumberTxt(w);
+                            }
+                        }
+                    },
+                    node: {
+                        lineColor: "#B18C21",
+                        fillColor: "rgba(253,172,21,0.8)"
+                    },
+                    nodeLabel: {
+                        padding: 2,
+                        borderRadius: 3,
+                        backgroundStyle: { fillColor: "rgba(0, 0, 0, 0.8)"},
+                        textStyle: { fillColor: "white", font:"12px Arial"}
+                    },
+                    aggregatedShape: {
+                        lineColor: "rgba(0,153,204,1)",
+                        fillColor: "rgba(0,153,204,0.3)"
+                    },
+                    nodeHovered: {
+                        fillColor: "rgba(253,172,21,0.5)",
+                        shadowBlur: 0,
+                        shadowColor: "255,255,255,0.01",
+                        labelStyle: {
+                            backgroundStyle: {
+                                fillColor: "rgba(0,153,204,0.8)",
+                                lineColor: "rgba(0,153,204,0.8)"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                id: "pie",
+                type: "charts",
+                shapesLayer:"default",
+                chartType: "piechart",
+                //settings function for piechart creation:
+                settingsFunction: function (node, data) {
+                    var aggr;
+                    if (enableAggregation) {
+                        aggr = data.aggregatedNodes;
+                    } else {
+                        aggr = [data];
+                    }
+
+                    //if aggregation consists of one result, then don't show piechart:
+                    if(aggr.length == 1) {
+                        return null;
+                    }
+
+                    //When settings are reapplied: Area height and width must be changed for
+                    //PieChart area to be the same as node area. Because heat-testing
+                    //first checks area height;
+                    if (aggr.settingsApplied) return {
+                        area: { height: node.radius * 2, width: node.radius * 2 },
+                        pie: { radius: node.removed ? 1e-30 : node.radius - 3, innerRadius: 5 }
+                    };
+                    aggr.settingsApplied = true;
+                    var pieData = {subvalues: []};
+
+                    for (var i = 0; i < aggr.length; i++) {
+                        var nd = aggr[i];
+                        pieData.subvalues.push({
+                            value: nd["population"],
+                            name: nd["name"]
+                        });
+                    }
+
+                    return {
+                        //Initial: Area height and width must be changed for
+                        //PieChart area to be the same as node area. Because heat-testing
+                        //first checks area height;
+                        area: {
+                            height: node.radius * 2,
+                            width: node.radius * 2,
+                            //A way to check PieChart area:
+                            //style: {
+                            //    fillColor: "red"
+                            //}
+                        },
+                        pie: {
+                            radius: node.radius - 3,
+                            innerRadius: 5,
+                            style: {
+                                colorDistribution: "list"
+                            }
+                        },
+                        data: {
+                            preloaded: pieData
+                        },
+                        labels: {enabled: false},
+                        info: {
+                            contentsFunction: function (data) {
+                                return "" + data.name + " " + data.value.toLocaleString() + "";
+                            }
+                        }
+                    };
+                }
+            }
+        ],
+        navigation: {
+            initialLat: 36,
+            initialLng: -100,
+            initialZoom: 4,
+            minZoom: 4
+        },
+        advanced: {
+            labelCache: false,
+            logging: false
+        }
+    });
+
+    function getNumberTxt(number) {
+        if (number > (1000 * 1000)) {
+            number = Math.floor(number / (1000 * 1000)) + 'M';
+            } else if (number > 1000) {
+            number = Math.floor(number / 1000) + 'k';
+        }
+        return number;
+    }
+
+    </script>
+
+</body>
+</html>
+
+
