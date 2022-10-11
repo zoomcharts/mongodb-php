@@ -25,16 +25,24 @@
 
     <script src="https://cdn.zoomcharts-cloud.com/1/latest/zoomcharts.js"></script>
     <script>
-        var chart = new ZoomCharts.FacetChart({
-        container: "chart",
-        area: { height: "450px" },
-        data: {
-            url: "/facetchart-service.php"
-        },
-        series:[
-            {data: {field: "value"}}
-        ],
-    });
+      var ZoomChartsLicense = "ZCP-w4sm9lg0n: Production licence for *.zoomcharts.com";
+      var ZoomChartsLicenseKey = "577dc0aa9e80ab25c83df560952407bfb23369d8c5566347c7"+
+	  "b54a64a4fbc45ccf4a1e7dbaf0827249c6676c19c918ed548f67ae225e813c5f57dfdc0709137"+
+	  "7b72c6c3883f1ae343abf24153ef77d3470ee58a8d62781eac016e311d12122256184e9b3efed"+
+	  "8b7e38d326e1fc10efc599576f803e7a173d128115eb57dabc5f4bf7ae520a50c6963e2ab8c56"+
+	  "2fa24fa46d246e57afb5bb129fb4507e738251b644f0bd9235665138f043cbce5acfa8197f934"+
+	  "c58e805963693344ff5240ad98d5aba8ed583f5990cd79e109ab23daaf8cba9ac5c3fee0471b2"+
+	  "f8f5abff432bff536d8980d582411724f60e01244c8ae94e3e31a4afe4e3322dc9aa5567eabc9";
+      var chart = new ZoomCharts.FacetChart({
+          container: "chart",
+          area: { height: "450px" },
+          data: {
+              url: "/facetchart-service.php"
+          },
+          series:[
+              {data: {field: "value"}}
+          ],
+      });
 
     </script>
 
